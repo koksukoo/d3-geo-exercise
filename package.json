@@ -27,6 +27,7 @@
     "d3-selection": "^1.1.0",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
+    "ramda": "^0.25.0",
     "topojson-client": "^3.0.0",
     "webpack": "^3.6.0"
   },
