@@ -1,0 +1,36 @@
+{
+  "name": "d3app",
+  "version": "0.0.1",
+  "description": "No description",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm-run-all -p watch-sass start-dev-server",
+    "start-dev-server": "webpack-dev-server",
+    "build-sass": "node-sass-chokidar --include-path ./src/styles/ src/styles/index.scss -o dist/styles --output-style compressed",
+    "watch-sass": "npm run build-sass && npm run build-sass -- -w",
+    "build": "webpack --optimize-minimize"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kajumito/reflow.git"
+  },
+  "author": "Mikko Kokkoniemi",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "compression-webpack-plugin": "^1.0.1",
+    "d3-geo": "^1.9.0",
+    "d3-queue": "^3.0.7",
+    "d3-scale": "^1.0.6",
+    "d3-selection": "^1.1.0",
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.1.1",
+    "topojson-client": "^3.0.0",
+    "webpack": "^3.6.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^2.9.1"
+  }
+}

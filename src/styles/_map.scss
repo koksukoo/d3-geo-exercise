@@ -1,0 +1,20 @@
+#map {
+    background-color: #060B0F;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .countries {
+        fill: #142225;
+        stroke: #476472;
+        stroke-width: 0.5px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
+
+        .centroid {
+            fill: #6D726E;
+            stroke: #577B8C;
+        }
+    }
+}
