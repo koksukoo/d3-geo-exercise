@@ -5,7 +5,7 @@
 - Pull repository
 
 ```
-git pull https://github.com/mikkokokkoniemi/d3-geo-exercise
+git clone https://github.com/mikkokokkoniemi/d3-geo-exercise
 ```
 
 - Install dependencies
