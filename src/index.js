@@ -4,10 +4,11 @@ import { select } from 'd3-selection';
 import { queue } from 'd3-queue';
 import * as topojson from 'topojson-client';
 import * as R from 'ramda';
+
 import jsonWorldMap from './countries.quantized.topo.json';
 import jsonFinland from './finland.json';
 
-// Obs! select is a dom-method
+// Note that select is a dom-method!
 
 let geoData;
 const width = 950;
@@ -22,7 +23,7 @@ const svg = select('#map')
 let group = svg.append('g');
 
 
-const loaded = (countries, traffic) => {
+const drawMap = (countries, traffic) => {
     // load map data to array
     geoData = topojson.feature(countries, countries.objects.countries).features;
     // append centroids for each country
@@ -51,11 +52,11 @@ const loaded = (countries, traffic) => {
        .attr('r', '2')
        .exit();
 
-    // draw arcs for yearly data
-    traffic.map(year => {
-      R.keys(year).map(i => {
-        year[i].map(country => {
-          const fromCountry = R.find(R.pathEq(['properties', 'NAME'], country.country))(geoData);
+    // draw arcs for yearly traffic data
+    traffic.map(years => {
+      R.keys(years).map(i => {
+        years[i].map(({country}) => {
+          const fromCountry = R.find(R.pathEq(['properties', 'NAME'], country))(geoData);
           const toCountry = R.find(R.pathEq(['properties', 'NAME'], 'Finland'))(geoData);
           const coordinates = [
             fromCountry.centroid,
@@ -79,6 +80,6 @@ const loaded = (countries, traffic) => {
 
 }
 
-loaded(jsonWorldMap, jsonFinland);
+drawMap(jsonWorldMap, jsonFinland);
 
 

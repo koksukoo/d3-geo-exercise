@@ -23,5 +23,5 @@ npm start
 - Or build project for production
 
 ```
-npm build
+npm run build
 ```
