@@ -1,26 +1,24 @@
 import { scaleLinear } from "d3-scale";
-import { geoMercator, geoPath, geoCentroid } from 'd3-geo';
-import { select } from 'd3-selection';
+import { geoCentroid } from 'd3-geo';
 import { queue } from 'd3-queue';
 import * as topojson from 'topojson-client';
 import * as R from 'ramda';
 
-import jsonWorldMap from './countries.quantized.topo.json';
-import jsonFinland from './finland.json';
+import jsonWorldMap from './json/countries.quantized.topo.json';
+import jsonFinland from './json/finland.json';
+import {
+  projection,
+  path,
+  svg
+} from './map-settings';
+import { moveItemAlongPath } from './util/animation';
+import { drawArcs } from './util/map';
 
 // Note that select is a dom-method!
 
 let geoData;
-const width = 950;
-const height = 700;
-
-const projection = geoMercator().scale(150).translate([width / 2, height / 1.5]);
-const path = geoPath().pointRadius(2).projection(projection);
-const svg = select('#map')
-    .append('svg')
-    .attr('width', width)
-    .attr('height', height);
 let group = svg.append('g');
+let allCoordinates = [];
 
 
 const drawMap = (countries, traffic) => {
@@ -62,27 +60,24 @@ const drawMap = (countries, traffic) => {
             fromCountry.centroid,
             toCountry.centroid
           ];
+          allCoordinates.push(coordinates);
 
           let line = svg.append('path')
             .datum(coordinates)
-            .attr('d', c => {
-              const bend = 1.3;
-              const d = {source: c[0], target: c[1]};
-              const dx = d.target[0] - d.source[0];
-              const dy = d.target[1] - d.source[1];
-              const dr = Math.sqrt(dx * dx + dy * dy)*bend;
-              // to avoid whirlpool effect do a flip if needed
-              if (d.target[0] - d.source[0] < 0) {
-                return `M${d.target[0]},${d.target[1]}A${dr},${dr} 0 0,1 ${d.source[0]},${d.source[1]}`;
-              }
-              return `M${d.source[0]},${d.source[1]}A${dr},${dr} 0 0,1 ${d.target[0]},${d.target[1]}`;
-            })
+            .attr('d', drawArcs)
             .attr('class', 'arc')
             .exit();
         });
       });
     });
 
+// todo: animation intensity should depend on traffic amount
+let i = 0;
+setInterval(_ => {
+  if (i > allCoordinates.length - 1) i = 0;
+  moveItemAlongPath(allCoordinates[0]);
+  i++;
+  }, 2000);
 }
 
 drawMap(jsonWorldMap, jsonFinland);
