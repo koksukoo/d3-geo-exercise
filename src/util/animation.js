@@ -1,6 +1,5 @@
 import { svg, path } from '../map-settings';
 import { transition } from 'd3-transition';
-import { LineString } from 'd3-geo';
 import { drawArcs } from './map';
 
 const delta = path => {
@@ -8,8 +7,6 @@ const delta = path => {
 
   return i => t => {
     const point = path.getPointAtLength(t * length);
-    const _t = Math.min(t + 0.05, 1);
-    const _point = path.getPointAtLength(_t * length);
     const scale = Math.min(Math.sin(Math.PI * t) * 0.7, 0.3);
 
     return `translate(${point.x},${point.y}) scale(${scale})`;
