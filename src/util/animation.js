@@ -19,17 +19,14 @@ const delta = path => {
 export const itemTransition = (item, route) => {
   const length = route.node().getTotalLength();
   item.transition()
-    .duration(length * 50)
+    .duration(length * 10)
     .attrTween('transform', delta(route.node()))
-    .on('end', _ => route.remove())
+    .on('end', () => route.remove())
     .remove();
-    // todo remove
 }
 
 /**
  * coordinates: [[x1, y1], [x2, y2]]
- * path: related path
- * svg: related svg
  */
 export const moveItemAlongPath = (coordinates) => {
   const route = svg.append('path')

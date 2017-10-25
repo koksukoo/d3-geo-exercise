@@ -71,13 +71,13 @@ const drawMap = (countries, traffic) => {
       });
     });
 
-// todo: animation intensity should depend on traffic amount
+// todo: animation intensity should depend on traffic amount. This is
 let i = 0;
 setInterval(_ => {
   if (i > allCoordinates.length - 1) i = 0;
-  moveItemAlongPath(allCoordinates[0]);
+  moveItemAlongPath(allCoordinates[i]);
   i++;
-  }, 2000);
+  }, 200);
 }
 
 drawMap(jsonWorldMap, jsonFinland);
